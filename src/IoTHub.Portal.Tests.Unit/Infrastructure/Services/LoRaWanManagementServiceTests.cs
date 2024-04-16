@@ -18,6 +18,8 @@ namespace IoTHub.Portal.Tests.Unit.Infrastructure.Services
     using NUnit.Framework;
     using RichardSzalay.MockHttp;
     using UnitTests.Bases;
+    using System.Linq;
+    using Fare;
 
     [TestFixture]
     public class LoRaWanManagementServiceTests : BackendUnitTest
@@ -63,14 +65,19 @@ namespace IoTHub.Portal.Tests.Unit.Infrastructure.Services
         {
             // Arrange
             var deviceId = Fixture.Create<string>();
+
+            string regex = "[0-9A-F]{8,15}";
+
+            Xeger xeger = new Xeger(regex, new Random(0)); // Note zero in Random constructor
+
             var command = new DeviceModelCommandDto
             {
-                Frame = Fixture.Create<string>(),
+                Frame = xeger.Generate(),
                 Confirmed = Fixture.Create<bool>(),
                 Port = Fixture.Create<int>()
             };
 
-            var expectedRawPayload = Convert.ToBase64String(Encoding.UTF8.GetBytes(command.Frame));
+            var expectedRawPayload = Convert.ToBase64String(Enumerable.Range(0, command.Frame.Length / 2).Select(x => Convert.ToByte(command.Frame.Substring(x * 2, 2), 16)).ToArray());
 
             _ = MockHttpClient.When(HttpMethod.Post, $"/api/cloudtodevicemessage/{deviceId}")
                 .With(m =>
