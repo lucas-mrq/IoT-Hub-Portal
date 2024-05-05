@@ -24,7 +24,7 @@
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">
     @mode Planning
-    <MudButton Variant="Variant.Filled" Class="mx-1" Color="Color.Primary" OnClick="Save" id="saveButton" Disabled="isProcessing">Save</MudButton>
+    <MudButton id="editPlanningSaveLayers" Variant="Variant.Filled" Class="mx-1" Color="Color.Primary" OnClick="Save" Disabled="isProcessing">Save</MudButton>
 </MudText>
 @if (!isProcessing)
 {
@@ -85,18 +85,18 @@
                                     </MudSelect>
                                 </MudTd>
                                 <MudTd DataLabel="Delete" Style="text-align: center">
-                                    <MudIconButton Color="Color.Default" Class="deleteRouteButton" OnClick="( () => DeleteSchedule(ContextSchedule))" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium"></MudIconButton>
+                                    <MudIconButton id="editPlanningDeleteLayers" Color="Color.Default" Class="deleteRouteButton" OnClick="( () => DeleteSchedule(ContextSchedule))" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium"></MudIconButton>
                                 </MudTd>
                             </RowTemplate>
                             <FooterContent>
-                                <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium" id="addScheduleButton" OnClick="AddSchedule" Color="Color.Success">Add slot</MudButton>
+                                <MudButton id="editPlanningAddLayers" StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium" OnClick="AddSchedule" Color="Color.Success">Add slot</MudButton>
                             </FooterContent>
                         </MudTable>
                         <div>
                             Days:
                             @foreach (string day in AvailableDay)
                             {
-                                <MudButton Size="Size.Medium" id="addScheduleButton" OnClick="() => ChangeOffDay(day)" Color="@((planning.Day.Contains(day)) ? Color.Error : Color.Success)">@day</MudButton>
+                                <MudButton id="editPlanningChangeOnDayLayers" Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.Day.Contains(day)) ? Color.Error : Color.Success)">@day</MudButton>
                             }
                         </div>
                     </MudItem>
@@ -139,7 +139,7 @@
                                     </MudSelect>
                                 </MudTd>
                                 <MudTd DataLabel="Delete" Style="text-align: center">
-                                    <MudIconButton Color="Color.Default" Class="deleteRouteButton" OnClick="( () => DeleteSchedule(ContextSchedule))" Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium"></MudIconButton>
+                                    <MudIconButton Color="Color.Default" Class="deleteRouteButton" Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium"></MudIconButton>
                                 </MudTd>
                             </RowTemplate>
                         </MudTable>
@@ -147,7 +147,7 @@
                             Days:
                             @foreach (string day in AvailableDay)
                             {
-                                <MudButton Size="Size.Medium" id="addScheduleButton" OnClick="() => ChangeOffDay(day)" Color="@((planning.Day.Contains(day)) ? Color.Success : Color.Error)">@day</MudButton>
+                                <MudButton id="editPlanningChangeOffDayLayers" Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.Day.Contains(day)) ? Color.Success : Color.Error)">@day</MudButton>
                             }
                         </div>
                     </MudItem>
@@ -289,7 +289,7 @@
     {
         var last = scheduleList.LastOrDefault();
 
-        if (scheduleList.Count == 0 || (last?.Start is not null && last?.End is not null && last?.CommandId is not null))
+        if (last?.Start is not null && last?.End is not null && last?.CommandId is not null)
         {
             ScheduleDto newSchedule = new ScheduleDto();
             scheduleList.Add(newSchedule);
@@ -299,10 +299,9 @@
     private void ChangeOffDay(string day)
     {
         string days = planning.Day;
-        if (days.Contains(day)) days.Replace(day, "");
+        if (days.Contains(day)) days  = days.Replace(day, "");
         else days += day;
         planning.Day = days;
-        StateHasChanged();
     }
 
     public async void Save()
@@ -323,13 +322,37 @@
             {
                 schedule.PlanningId = planning.Id;
 
-                if (initScheduleList.Any(obj => obj.Id == schedule.Id))
+                if (initScheduleList.Contains(schedule))
                 {
                     await ScheduleClientService.UpdateSchedule(schedule);
                 }
                 else
                 {
                     await ScheduleClientService.CreateSchedule(schedule);
+                }
+            }
+            foreach (ScheduleDto schedule in initScheduleList.Where(schedule => !scheduleList.Contains(schedule)))
+            {
+                await ScheduleClientService.DeleteSchedule(schedule.Id);
+            }
+        }
+        catch (ProblemDetailsException exception)
+        {
+            Error?.ProcessProblemDetails(exception);
+        }
+    }
+
+    public async Task SaveLayers(HashSet<LayerHash> saveLayers)
+    {
+        try
+        {
+            foreach (LayerHash layer in saveLayers)
+            {
+                await LayerClientService.UpdateLayer(layer.LayerData);
+
+                if (layer.Children.Count() != 0)
+                {
+                    await SaveLayers(layer.Children);
                 }
             }
         }
@@ -389,25 +412,5 @@
             }
         }
         return false;
-    }
-
-    public async Task SaveLayers(HashSet<LayerHash> saveLayers)
-    {
-        try
-        {
-            foreach (LayerHash layer in saveLayers)
-            {
-                await LayerClientService.UpdateLayer(layer.LayerData);
-
-                if (layer.Children.Count() != 0)
-                {
-                    await SaveLayers(layer.Children);
-                }
-            }
-        }
-        catch (ProblemDetailsException exception)
-        {
-            Error?.ProcessProblemDetails(exception);
-        }
     }
 }
