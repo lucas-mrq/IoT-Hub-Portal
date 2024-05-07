@@ -39,5 +39,10 @@ namespace AzureIoTHub.Portal.Domain.Entities
         /// The device labels.
         /// </summary>
         public ICollection<Label> Labels { get; set; }
+
+        /// <summary>
+        /// The LayerId of the device.
+        /// </summary>
+        public string? LayerId { get; set; }
     }
 }

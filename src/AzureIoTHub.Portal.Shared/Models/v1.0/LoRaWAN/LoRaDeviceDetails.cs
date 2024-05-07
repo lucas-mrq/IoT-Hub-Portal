@@ -141,6 +141,11 @@ namespace AzureIoTHub.Portal.Models.v10.LoRaWAN
         public string GatewayID { get; set; } = default!;
 
         /// <summary>
+        /// The LayerId of the device.
+        /// </summary>
+        public string? LayerId { get; set; } = default!;
+
+        /// <summary>
         /// A value indicating whether the downlinks are enabled (True if not provided)
         /// </summary>
         [DefaultValue(true)]

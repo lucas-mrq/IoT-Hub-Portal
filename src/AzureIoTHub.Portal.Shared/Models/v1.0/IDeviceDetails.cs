@@ -53,5 +53,10 @@ namespace AzureIoTHub.Portal.Shared.Models
         /// Labels
         /// </summary>
         public List<LabelDto> Labels { get; set; }
+
+        /// <summary>
+        /// The LayerId of the device.
+        /// </summary>
+        public string? LayerId { get; set; }
     }
 }

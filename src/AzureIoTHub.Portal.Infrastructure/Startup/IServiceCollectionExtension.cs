@@ -162,6 +162,9 @@ namespace AzureIoTHub.Portal.Infrastructure.Startup
                             .AddScoped<IDeviceTagValueRepository, DeviceTagValueRepository>()
                             .AddScoped<IDeviceModelCommandRepository, DeviceModelCommandRepository>()
                             .AddScoped<IConcentratorRepository, ConcentratorRepository>()
+                            .AddScoped<ILayerRepository, LayerRepository>()
+                            .AddScoped<IScheduleRepository, ScheduleRepository>()
+                            .AddScoped<IPlanningRepository, PlanningRepository>()
                             .AddScoped<ILoRaDeviceTelemetryRepository, LoRaDeviceTelemetryRepository>()
                             .AddScoped<ILabelRepository, LabelRepository>();
         }
@@ -171,6 +174,9 @@ namespace AzureIoTHub.Portal.Infrastructure.Startup
             _ = services.AddTransient<IDeviceModelImageManager, DeviceModelImageManager>();
             _ = services.AddTransient<IConcentratorTwinMapper, ConcentratorTwinMapper>();
             _ = services.AddTransient<IDeviceModelCommandMapper, DeviceModelCommandMapper>();
+            _ = services.AddTransient<ILayerService, LayerService>();
+            _ = services.AddTransient<IScheduleService, ScheduleService>();
+            _ = services.AddTransient<IPlanningService, PlanningService>();
 
             return services.AddTransient<IDeviceTwinMapper<DeviceListItem, DeviceDetails>, DeviceTwinMapper>()
                             .AddTransient<IDeviceTwinMapper<DeviceListItem, LoRaDeviceDetails>, LoRaDeviceTwinMapper>()

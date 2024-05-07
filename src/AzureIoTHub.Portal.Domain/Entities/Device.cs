@@ -51,5 +51,10 @@ namespace AzureIoTHub.Portal.Domain.Entities
         /// List of custom device tags and their values.
         /// </summary>
         public ICollection<DeviceTagValue> Tags { get; set; } = default!;
+
+        /// <summary>
+        /// The LayerId of the device.
+        /// </summary>
+        public string? LayerId { get; set; }
     }
 }
