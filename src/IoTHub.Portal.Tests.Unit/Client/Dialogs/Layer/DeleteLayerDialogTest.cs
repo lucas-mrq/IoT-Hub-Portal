@@ -19,7 +19,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Layer
     using Moq;
     using NUnit.Framework;
     using System.Threading.Tasks;
-    using IoTHub.Portal.Client.Dialogs.Building;
+    using IoTHub.Portal.Client.Dialogs.Layer;
     using MudBlazor;
     using IoTHub.Portal.Client.Exceptions;
 

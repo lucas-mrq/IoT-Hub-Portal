@@ -62,7 +62,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -94,7 +94,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
                 ComponentParameter.CreateParameter("scheduleList", ScheduleList )
             );
 
-            Assert.AreEqual(cut.Instance.planning.Day, "SaSu");
+            Assert.AreEqual(cut.Instance.planning.DayOff, "SaSu");
             Assert.AreEqual(cut.Instance.scheduleList[0].Start, "00:00");
             cut.WaitForAssertion(() => MockRepository.VerifyAll());
         }
@@ -107,7 +107,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -154,7 +154,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -205,7 +205,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -256,7 +256,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
         {
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu"
+                DayOff = "SaSu"
             };
             ScheduleDto firstSchedule = new ScheduleDto
             {
@@ -292,7 +292,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -327,7 +327,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
             var editPlanningChangeOnDayLayers = cut.FindAll("#editPlanningChangeOnDayLayers")[0];
             editPlanningChangeOnDayLayers.Click();
 
-            Assert.AreEqual(cut.Instance.planning.Day, "SaSuMo");
+            Assert.AreEqual(cut.Instance.planning.DayOff, "SaSuMo");
             cut.WaitForAssertion(() => MockRepository.VerifyAll());
         }
 
@@ -339,7 +339,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -374,7 +374,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
             var editPlanningChangeOffDayLayers = cut.FindAll("#editPlanningChangeOffDayLayers")[5];
             editPlanningChangeOffDayLayers.Click();
 
-            Assert.AreEqual(cut.Instance.planning.Day, "Su");
+            Assert.AreEqual(cut.Instance.planning.DayOff, "Su");
             cut.WaitForAssertion(() => MockRepository.VerifyAll());
         }
 
@@ -388,7 +388,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -443,7 +443,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
@@ -514,7 +514,7 @@ namespace IoTHub.Portal.Tests.Unit.Client.Components.Planning
 
             PlanningDto Planning = new PlanningDto
             {
-                Day = "SaSu",
+                DayOff = "SaSu",
                 CommandId = expectedDeviceModelCommandDto[0].Id
             };
             ScheduleDto firstSchedule = new ScheduleDto
