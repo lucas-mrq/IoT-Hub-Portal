@@ -7,7 +7,7 @@ namespace AzureIoTHub.Portal.Client.Helpers
     using AzureIoTHub.Portal.Client.Models;
     using AzureIoTHub.Portal.Shared.Models.v10;
 
-    public class LayerHelper
+    public static class LayerHelper
     {
 
         public static HashSet<LayerHash> GetHashsetLayer(List<LayerDto> listLayers)

@@ -239,6 +239,9 @@ namespace AzureIoTHub.Portal.Server
                 opts.UseInlineDefinitionsForEnums();
             });
 
+            _ = services.AddHostedService<SendPlanningCommandService>();
+            _ = services.AddScoped<ISendPlanningCommandService, SendPlanningCommandService>();
+
             _ = services.AddApiVersioning(o =>
             {
                 o.AssumeDefaultVersionWhenUnspecified = true;
