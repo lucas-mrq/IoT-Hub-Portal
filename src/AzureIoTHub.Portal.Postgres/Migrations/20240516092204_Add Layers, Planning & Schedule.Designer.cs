@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AzureIoTHub.Portal.Postgres.Migrations
 {
     [DbContext(typeof(PortalDbContext))]
-    [Migration("20240507131508_Add Layers, Planning & Schedule")]
+    [Migration("20240516092204_Add Layers, Planning & Schedule")]
     partial class AddLayersPlanningSchedule
     {
         /// <inheritdoc />
@@ -381,7 +381,6 @@ namespace AzureIoTHub.Portal.Postgres.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Father")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -431,13 +430,8 @@ namespace AzureIoTHub.Portal.Postgres.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("DayExceptions")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DayOff")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("DayOff")
+                        .HasColumnType("integer");
 
                     b.Property<string>("End")
                         .IsRequired()

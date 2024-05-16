@@ -4,6 +4,8 @@
 namespace AzureIoTHub.Portal.Shared.Models.v10
 {
     using System;
+    using AzureIoTHub.Portal.Shared.Constants;
+
     public class PlanningDto
     {
         /// <summary>
@@ -34,16 +36,11 @@ namespace AzureIoTHub.Portal.Shared.Models.v10
         /// <summary>
         /// When planning is used
         /// </summary>
-        public string DayOff { get; set; }
+        public DaysEnumFlag.DaysOfWeek DayOff { get; set; }
 
         /// <summary>
         /// Day off command.
         /// </summary>
         public string CommandId { get; set; }
-
-        /// <summary>
-        /// Day off exceptions.
-        /// </summary>
-        public string DayExceptions { get; set; }
     }
 }

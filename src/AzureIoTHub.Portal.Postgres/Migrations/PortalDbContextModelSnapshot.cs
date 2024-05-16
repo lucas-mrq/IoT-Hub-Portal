@@ -378,7 +378,6 @@ namespace AzureIoTHub.Portal.Postgres.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Father")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -428,13 +427,8 @@ namespace AzureIoTHub.Portal.Postgres.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("DayExceptions")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DayOff")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("DayOff")
+                        .HasColumnType("integer");
 
                     b.Property<string>("End")
                         .IsRequired()
