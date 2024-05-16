@@ -215,7 +215,7 @@ namespace AzureIoTHub.Portal.Server.Services
 
         public void AddNewDevice(DeviceListItem device)
         {
-            LayerDto layer = layers.FirstOrDefault(layer => layer.Id == device.LayerId);
+            var layer = layers.FirstOrDefault(layer => layer.Id == device.LayerId);
 
             // If the layer linked to a device already has a planning, add the device to the planning list
             foreach (PlanningCommand planning in this.planningCommands.Where(planning => planning.planningId == layer.Planning))
@@ -225,14 +225,14 @@ namespace AzureIoTHub.Portal.Server.Services
             }
 
             // Else create the planning
-            PlanningCommand newPlanning = new PlanningCommand(device.DeviceID, layer.Planning);
+            var newPlanning = new PlanningCommand(device.DeviceID, layer.Planning);
             AddCommand(newPlanning);
             this.planningCommands.Add(newPlanning);
         }
 
         public void AddCommand(PlanningCommand planningCommand)
         {
-            PlanningDto planningData = plannings.FirstOrDefault(planning => planning.Id == planningCommand.planningId);
+            var planningData = plannings.FirstOrDefault(planning => planning.Id == planningCommand.planningId);
 
             // Connect off days command to the planning
             addPlanningSchedule(planningData, planningCommand);
@@ -255,7 +255,7 @@ namespace AzureIoTHub.Portal.Server.Services
             {
                 if ((planningData.DayOff & key) == planningData.DayOff)
                 {
-                    PayloadCommand newPayload = new PayloadCommand(getTimeSpan("0:00"), getTimeSpan("24:00"), planningData.CommandId);
+                    var newPayload = new PayloadCommand(getTimeSpan("0:00"), getTimeSpan("24:00"), planningData.CommandId);
                     planning.commands[key].Add(newPayload);
                 }
             }
@@ -271,13 +271,13 @@ namespace AzureIoTHub.Portal.Server.Services
             {
                 if (planning.commands[key].Count == 0)
                 {
-                    PayloadCommand newPayload = new PayloadCommand(start, end, schedule.CommandId);
+                    var newPayload = new PayloadCommand(start, end, schedule.CommandId);
                     planning.commands[key].Add(newPayload);
                 }
                 // The if condition is utilized to skip day off schedules.
                 else if (planning.commands[key][0].start != getTimeSpan("00:00") || planning.commands[key][0].end != getTimeSpan("24:00"))
                 {
-                    PayloadCommand newPayload = new PayloadCommand(start, end, schedule.CommandId);
+                    var newPayload = new PayloadCommand(start, end, schedule.CommandId);
                     planning.commands[key].Add(newPayload);
                 }
             }
@@ -287,20 +287,20 @@ namespace AzureIoTHub.Portal.Server.Services
         {
             var tabTime = time != null ? time.Split(':') : ("0:0").Split(':');
 
-            int hour = int.Parse(tabTime[0], CultureInfo.InvariantCulture);
-            int minute = int.Parse(tabTime[1], CultureInfo.InvariantCulture);
+            var hour = int.Parse(tabTime[0], CultureInfo.InvariantCulture);
+            var minute = int.Parse(tabTime[1], CultureInfo.InvariantCulture);
 
             return new TimeSpan(hour, minute, 0);
         }
 
         public async Task SendCommand()
         {
-            string timeZoneId = "Europe/Paris";
-            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
-            DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZone);
+            var timeZoneId = "Europe/Paris";
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+            var currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZone);
 
-            DayOfWeek currentDay = currentTime.DayOfWeek;
-            TimeSpan currentHour = currentTime.TimeOfDay ;
+            var currentDay = currentTime.DayOfWeek;
+            var currentHour = currentTime.TimeOfDay ;
 
             // Search for the appropriate command at the correct time from each plan.
             foreach (var planning in this.planningCommands)
