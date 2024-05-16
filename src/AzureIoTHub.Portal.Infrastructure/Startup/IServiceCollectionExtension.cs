@@ -212,8 +212,8 @@ namespace AzureIoTHub.Portal.Infrastructure.Startup
                                 var serviceClient = new BlobServiceClient(configuration.StorageAccountConnectionString);
                                 var container = serviceClient.GetBlobContainerClient(opts.ImageContainerName);
 
-                                _ = container.SetAccessPolicy(PublicAccessType.Blob);
                                 _ = container.CreateIfNotExists();
+                                _ = container.SetAccessPolicy(PublicAccessType.Blob);
 
                                 opts.BaseUri = container.Uri;
                             });
