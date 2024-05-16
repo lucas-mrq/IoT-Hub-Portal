@@ -12,7 +12,7 @@ namespace AzureIoTHub.Portal.Client.Helpers
 
         public static HashSet<LayerHash> GetHashsetLayer(List<LayerDto> listLayers)
         {
-            HashSet<LayerHash> Layers = new HashSet<LayerHash> { };
+            var Layers = new HashSet<LayerHash> { };
             if (listLayers is null) throw new ArgumentNullException(nameof(listLayers));
 
             foreach (var layer in listLayers)
