@@ -218,7 +218,7 @@ namespace AzureIoTHub.Portal.Server.Services
             var layer = layers.FirstOrDefault(layer => layer.Id == device.LayerId);
 
             // If the layer linked to a device already has a planning, add the device to the planning list
-            foreach (PlanningCommand planning in this.planningCommands.Where(planning => planning.planningId == layer.Planning))
+            foreach (var planning in this.planningCommands.Where(planning => planning.planningId == layer.Planning))
             {
                 planning.listDeviceId.Add(device.DeviceID);
                 return;
@@ -238,7 +238,7 @@ namespace AzureIoTHub.Portal.Server.Services
             addPlanningSchedule(planningData, planningCommand);
 
 
-            foreach (ScheduleDto schedule in schedules)
+            foreach (var schedule in schedules)
             {
                 // Add schedules to the planning
                 if (schedule.PlanningId == planningCommand.planningId) addSchedule(schedule, planningCommand);
@@ -251,7 +251,7 @@ namespace AzureIoTHub.Portal.Server.Services
         // planning.commands[Sa] contains a list of PayloadCommand Values.
         public void addPlanningSchedule(PlanningDto planningData, PlanningCommand planning)
         {
-            foreach (DaysEnumFlag.DaysOfWeek key in planning.commands.Keys)
+            foreach (var key in planning.commands.Keys)
             {
                 if ((planningData.DayOff & key) == planningData.DayOff)
                 {
@@ -264,10 +264,10 @@ namespace AzureIoTHub.Portal.Server.Services
         public void addSchedule(ScheduleDto schedule, PlanningCommand planning)
         {
             // Convert a string into TimeSpan format
-            TimeSpan start = getTimeSpan(schedule.Start);
-            TimeSpan end = getTimeSpan(schedule.End);
+            var start = getTimeSpan(schedule.Start);
+            var end = getTimeSpan(schedule.End);
 
-            foreach (DaysEnumFlag.DaysOfWeek key in planning.commands.Keys)
+            foreach (var key in planning.commands.Keys)
             {
                 if (planning.commands[key].Count == 0)
                 {
