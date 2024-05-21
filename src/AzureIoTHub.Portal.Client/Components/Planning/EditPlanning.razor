@@ -98,7 +98,7 @@
                             {
                                 if (day != DaysEnumFlag.DaysOfWeek.None)
                                 {
-                                    <MudButton id="editPlanningChangeOnDayLayers" Style=@((planning.DayOff & day) != day ? "text-decoration: underline;" : "text-decoration: line-through;") Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.DayOff & day) != day ? Color.Success : Color.Error)">@day</MudButton>
+                                    <MudButton id="editPlanningChangeOnDayLayers" Style=@((planning.DayOff & day) != day ? "" : "text-decoration: line-through;") Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.DayOff & day) != day ? Color.Success : Color.Error)">@day</MudButton>
                                 }
                             }
                         </div>
@@ -152,7 +152,7 @@
                             {
                                 if (day != DaysEnumFlag.DaysOfWeek.None)
                                 {
-                                    <MudButton id="editPlanningChangeOffDayLayers" Style=@((planning.DayOff & day) == day ? "text-decoration: underline;" : "text-decoration: line-through;") Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.DayOff & day) == day ? Color.Success : Color.Error)">@day</MudButton>
+                                    <MudButton id="editPlanningChangeOffDayLayers" Style=@((planning.DayOff & day) == day ? "text-decoration: underline;" : "") Size="Size.Medium" OnClick="() => ChangeOffDay(day)" Color="@((planning.DayOff & day) == day ? Color.Success : Color.Error)">@day</MudButton>
                                 }
                             }
                         </div>
