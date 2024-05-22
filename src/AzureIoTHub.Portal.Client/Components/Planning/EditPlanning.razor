@@ -405,15 +405,13 @@
             connections[pair[0]] = pair[1];
         }
 
-        foreach (var pair in listSchedule)
+        string start = listSchedule[0][0];
+        string end = listSchedule[0][1];
+        while (connections.ContainsKey(end))
         {
-            string start = pair[0];
-            string end = pair[1];
-            if (connections.ContainsKey(end))
-            {
-                connections[start] = connections[end];
-                connections.Remove(end);
-            }
+            connections[start] = connections[end];
+            connections.Remove(end);
+            end = connections[start];
         }
 
         if (connections.Count != 1) return " - Business Day is not fully completed";
