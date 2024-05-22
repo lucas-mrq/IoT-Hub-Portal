@@ -60,8 +60,13 @@
                             }
                             else if (context.LayerId != null && context.LayerId.Contains('-'))
                             {
-                                <MudTooltip Text="Registered on other Layer">
-                                    <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.IndeterminateCheckBox" Size="Size.Medium" @onclick="() => UpdateChecked(context)"></MudIconButton>
+                                <MudTooltip>
+                                    <ChildContent>
+                                        <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.IndeterminateCheckBox" Size="Size.Medium" @onclick="() => UpdateChecked(context)"></MudIconButton>
+                                    </ChildContent>
+                                    <TooltipContent>
+                                        <MudText>@FindPath(LayerList, context.LayerId)</MudText>
+                                    </TooltipContent>
                                 </MudTooltip>
                             }
                             else
@@ -96,7 +101,7 @@
     public Error Error { get; set; } = default!;
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = default!;
-    
+
     [Parameter] public LayerDto InitLayer { get; set; } = default!;
     [Parameter] public HashSet<LayerHash> LayerList { get; set; } = default!;
 
@@ -171,6 +176,21 @@
         {
             IsLoading = false;
         }
+    }
+
+    public string FindPath(HashSet<LayerHash> layerHash, string layerId, string currentText = "")
+    {
+        var tempAnswer = "";
+        foreach (var layer in layerHash)
+        {
+            if (layer.LayerData.Id == layerId)
+                return currentText + layer.LayerData.Name;
+
+            else
+                tempAnswer = FindPath(layer.Children, layerId, currentText + layer.LayerData.Name + " ➤ ");
+                if (!string.IsNullOrEmpty(tempAnswer)) return tempAnswer;
+        }
+        return "";
     }
 
     public void UpdateChecked(DeviceListItem device)

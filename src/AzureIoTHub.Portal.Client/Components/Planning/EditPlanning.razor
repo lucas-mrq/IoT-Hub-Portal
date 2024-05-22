@@ -38,7 +38,7 @@
                             <MudTextField @bind-Value="@planning.Name" For="@(() => planning.Name)" Label="Name" Margin="Margin.Dense" Variant="Variant.Outlined" Required="true" />
                         </MudItem>
                         <MudTd DataLabel="Command" Style="text-align: center;">
-                            <MudSelect @bind-Value="@SelectedModel" Label="Device Model" Margin="Margin.Dense" Variant="Variant.Outlined">
+                            <MudSelect @bind-Value="@SelectedModel" Label=" Device Model" Margin="Margin.Dense" Variant="Variant.Outlined" Disabled="@((mode == "New") ? false : true)">
                                 @foreach (string model in CommandDictionary.Keys.ToList())
                                 {
                                     <MudSelectItem Value="@(model)">@model</MudSelectItem>

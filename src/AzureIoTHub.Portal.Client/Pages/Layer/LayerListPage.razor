@@ -8,7 +8,7 @@
 @using System.Net.Http.Headers
 @using AzureIoTHub.Portal.Shared.Constants
 @using AzureIoTHub.Portal.Client.Models
-@using AzureIoTHub.Portal.Client.Dialogs.Devices
+@using AzureIoTHub.Portal.Client.Dialogs.Layer
 
 @attribute [Authorize]
 @inject NavigationManager NavigationManager
@@ -108,7 +108,7 @@
 
     public async Task DeleteLayer(LayerHash delLayer, HashSet<LayerHash> fatherLayers)
     {
-        foreach (LayerHash layer in fatherLayers)
+        foreach (var layer in fatherLayers)
         {
             if (layer.Children.Contains(delLayer))
             {
